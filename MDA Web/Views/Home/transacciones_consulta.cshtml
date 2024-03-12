@@ -1,0 +1,271 @@
+﻿
+@{
+    ViewBag.Title = "Transacciones_consulta";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="contenedor" class="base_gris">
+        <section class="base_gris"></section>
+        <section class="base_contenido2">
+            <section class="base_texto_sistem">
+                <div style="text-align: center;">
+                    <span class="titulo_pagina">Estado de cuenta</span><br><br>
+                </div>
+
+                <div class="consulta_col1">
+                    <strong>@Model.card</strong><br>
+                    @Model.clienteNombre
+                </div>
+                <div class="consulta_col2">
+                    Movimientos al<br>
+                                  <strong>@DateTime.Now.ToString("dd-")@DateTime.Now.ToString("MMM").First().ToString().ToUpper()@DateTime.Now.ToString("MMM").Substring(1).Replace(".","")@DateTime.Now.ToString("-yyyy")</strong>
+                </div>
+                <div class="consulta_col3">
+                    Promoción: Con el 100 + 100 de Monedero del Ahorro ¡Acumula y gana!<br>
+                    <span class="foot_text_red">Tu record de la promoción es <strong>e$ @String.Format("{0:0.00}", Model.SaldoDesglose1)</strong> y te faltan <strong>e$ @String.Format("{0:0.00}", Model.SaldoDesglose2)</strong> para ganarte un nuevo bono</span>
+                </div>
+                <div class="consulta_col4">Fecha</div>
+                <div class="consulta_col5">Movimiento</div>
+                <div class="consulta_col6">Ticket</div>
+                <div class="consulta_col7">Abono</div>
+                <div class="consulta_col7">Cargo</div>
+                <table class="tablasaldo">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        @if (Model.Transactions != null && Model.Transactions.Count > 0)
+                        {
+                            Model.Transactions.Reverse();
+                            foreach (var transaction in Model.Transactions)
+                            {
+                                <tr>
+                                    <div class="consulta_col8">@transaction.Fecha</div>
+                                    <div class="consulta_col9">
+                                        <div>@transaction.TipoMovimiento</div>
+                                        <div>@transaction.NombreSucursal</div>
+                                    </div>
+                                    <div class="consulta_col10">
+                                        <a href="@Url.Action("DetalleTicket", "Home", new { cardnumber = Model.card, transactionid = transaction.TransactionId })" title="Ver detalle movimiento">@transaction.Invoice</a>
+                                    </div>
+                                    <div class="consulta_col11">e$ @transaction.Abono</div>
+                                    <div class="consulta_col11">e$ @transaction.Cargo</div>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                    <tr>
+                       
+                        <td calign="center" colspan="5"><strong><em>Sin movimientos</em></strong></td>
+
+
+                    </tr>
+                        }
+
+                    </tbody>
+                    <tbody>
+                        <tr>
+
+                            <td colspan="5" align="right"><strong><em>* Últimos tres meses</em></strong></td>
+                        </tr>
+                    </tbody>
+
+
+                </table>
+                <div class="consulta_col13">+ El dinero electrónico acumulado en tu tarjeta no tiene fecha de caducidad y podrás utilizarlo en el momento que lo requieras, visítanos regularmente y no dejes de utilizar tu Monedero del Ahorro para acumular más dinero electrónico.</div>
+                <div consulta_col></div>
+                <style type="text/css">
+                   
+
+                    .tablasaldocontainer {
+                        border-collapse: collapse;
+                        font-size: 10px;
+                        border: 1px solid #ADB1BD;
+                        background-color: #FFFFFF;
+                        margin: auto;
+                        width: 98%;
+                    }
+
+                    .tablasaldo {
+                        border-collapse: collapse;
+                        font-size: 10px;
+                        background-color: #FFFFFF;
+                        margin: auto;
+                        width: 96%;
+                    }
+
+                        .tablasaldo thead tr {
+                            border-top: 2px solid #6D6E71;
+                            border-bottom: 2px solid #6D6E71;
+                            background-color: #F0F0F0;
+                        }
+
+                        .tablasaldo thead td {
+                            font-size: 10px;
+                            padding: 0.8em;
+                            font-weight: bold;
+                        }
+
+                        .tablasaldo tr {
+                            border-bottom: 1px solid #ADB1BD;
+                        }
+
+                        .tablasaldo td {
+                            font-size: 10px;
+                            padding: 0.5em;
+                        }
+
+                            .tablasaldo td.abono {
+                                color: #00F;
+                            }
+
+                            .tablasaldo td.cargo {
+                                color: #F00;
+                            }
+                </style>
+                @*<div class="consulta_col9"></div>
+                <div class="consulta_col9"></div>
+                <div class="consulta_col9"></div>*@
+                <table></table>
+                <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <br>
+                                <table class="tablasaldocontainer">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <br>
+                                                <table class="tablasaldo">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="2" align="left"><span style="font-size:16px; font-weight:bold;">Mis Planes de Lealtad</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="60%" align="left">
+                                                                <span style="font-size:24px; font-weight:bold;">@Model.card</span>
+                                                            </td>
+                                                            <td width="40%" valign="bottom" align="right">&nbsp;</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="tablasaldo" style=" padding: 10px;">
+                                                    <thead>
+                                                        <tr style="color: gray; font-weight: bold;">
+
+                                                            <td>&nbsp;</td>
+                                                            <td>Programa</td>
+                                                            <td>Artículo</td>
+                                                            <td>Cantidad</td>
+                                                            <td>Regla</td>
+                                                            <td>Vigencia</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.PlanesLealtad != null && Model.PlanesLealtad.Count > 0)
+                                                        {
+                                                            foreach (var plan in @Model.PlanesLealtad)
+                                                            {
+                                                                <tr style="color: yellow;">
+                                                                    <td>&nbsp;</td>
+                                                                    <td style="color: gray;">@plan.itembrand</td>
+                                                                    <td style="color: gray;">
+                                                                        <span style="font-size:11px;font-style:italic;">@plan.item</span>
+                                                                        <br />
+                                                                        <span style="font-size:11px;font-style:italic;">@plan.itemname</span>
+                                                                    </td>
+                                                                    <td style="color: gray;">
+                                                                        @plan.quantity caja(s)
+                                                                        <br />
+
+                                                                        @if (plan.quantitybonus != "0")
+                                                                        {
+                                                                            <span style="font-size:10px;font-style:italic;color:#00F;">
+                                                                                @plan.quantitybonus caja(s) BONIFICACIÓN
+                                                                            </span>
+
+                                                                        }
+
+                                                                    </td>
+                                                                    <td style="color: gray;"><b>&middot; @plan.itemruledesc</b></td>
+                                                                    <td style="color: gray;">@plan.itemruleexpiration</td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr style="color: red;"><td colspan="5">* Sin Movimientos </td></tr>
+                                                        }
+
+                                                        <!-- Bonificaciones Pendientes -->
+                                                        @if (Model.BonificacionesPendientes != null && Model.BonificacionesPendientes.Count > 0)
+                                                        {
+                                                            <tr style="background-color:#FFCFCA;">
+                                                                <td td align="center" colspan="7">
+                                                                    <span style="font-style:italic; font-size:12px; font-weight:bold; color:#F00;">
+                                                                        Bonificaciones Pendientes por entregar
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            foreach (var plan in @Model.BonificacionesPendientes)
+                                                            {
+                                                                <tr style="background-color:#fff6bf;">
+
+                                                                    <td>&nbsp;</td>
+                                                                    <td style="color: gray;">@plan.itembrand</td>
+                                                                    <td style="color: gray;">
+                                                                        <span style="font-size:11px;font-style:italic;">@plan.item</span><br />
+                                                                        <span style="font-size:11px;font-style:italic;">@plan.itemname</span>
+                                                                    </td>
+                                                                    <td style="color: red;">@plan.quantity Caja(s) de Bonificación</td>
+                                                                    <td style="color: gray;">* Agregar a su próxima compra</td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            }
+                                                        }
+
+                                                    </tbody>
+
+
+
+                                                    <tr style="color: gray;"><td align="center" colspan="7"><em>* Movimientos a @DateTime.Now.ToString("MMM").First().ToString().ToUpper()@DateTime.Now.ToString("MMM").Substring(1).Replace(".", " ")@DateTime.Now.ToString("dd,")@DateTime.Now.ToString(" yyyy")</em></td></tr>
+                                                </table>
+                                                <br>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </section>
+            <form>
+                <section class="base_caja_sistem2"><img src="~/Content/Images/img_tarjeta.jpg" alt="" width="480" height="680" /></section>
+            </form>
+        </section>
+    </div>
+</body>
+
+</html>

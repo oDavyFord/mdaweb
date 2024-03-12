@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Beneficios";
+
+
+    Response.ContentType = "text/html; charset=utf-8";
+    Response.Expires = -1; // Date in the past
+    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+    Response.Cache.SetNoStore();
+    Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+    Response.AddHeader("Pragma", "no-cache");
+    Response.AddHeader("X-Frame-Options", "SAMEORIGIN");
+    Response.AddHeader("X-XSS-Protection", "1; mode=block");
+    Response.AddHeader("Content-Security-Policy", "frame-ancestors 'self'; img-src 'self';");
+    Response.AddHeader("Permissions-Policy", "camera=(), fullscreen=self, geolocation=*, microphone=(self)");
+    Response.AddHeader("Referrer-Policy", "strict-origin");
+    Response.Headers.Remove("x-powered-by");
+
+
+    System.Web.HttpContext.Current.Session["session.cookie_httponly"] = 1;
+
+
+    System.Web.HttpContext.Current.Session["session.use_only_cookies"] = 1;
+
+    System.Web.HttpContext.Current.Session["session.cookie_secure"] = 1;
+    System.Web.HttpContext.Current.Session["session.cookie_samesite"] = "Strict";
+
+    int SSL_Port = 448;
+
+    //if (!Request.IsSecureConnection)
+    //{
+    //    string redirect = "https://" + Request.ServerVariables["HTTP_HOST"] + ":" + SSL_Port + Request.ServerVariables["URL"];
+    //    Response.Redirect(redirect);
+    //}
+
+    Session.Abandon();
+
+
+}
+
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="contenedor">
+        <section class="base_gris"></section>
+        <section class="base_contenido3">
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">Beneficios</span>
+                <br />
+                <br />
+                <span class="texto_pagina">
+                    Es un sistema en el que por cada compra que realices de <b>productos participantes</b> obtendrás Dinero Electrónico con el cual, posteriormente, podrás comprar <b>cualquier producto</b> que desees dentro de la farmacia.
+                    <br />
+                    <br />
+                    Podrás utilizar tu Monedero del Ahorro en todas las sucursales de Farmacias del Ahorro. Además disfrutarás de otros <b>beneficios</b> como descuentos en establecimientos <b>afiliados</b> al programa de Monedero del Ahorro.
+                    <br />
+                    <br />
+                    El dinero electrónico acumulado en tu tarjeta no tiene fecha de caducidad y podrás utilizarlo en el momento que lo requieras, visítanos regularmente y no dejes de utilizar tu Monedero del Ahorro para acumular más dinero electrónico.
+                    <br />
+                    <br />
+                    En Farmacias del Ahorro <b>Te queremos bien</b>…
+                    <br />
+                    Y con <b>Monedero del Ahorro</b> queremos premiar tu lealtad.
+                    <br />
+                    <br />
+                    Si tienes pendiente una entrega a domicilio (pedido de servicio a domicilio) no podrás utilizar tu dinero electrónico.
+                </span>
+                <br />
+                <br />
+            </section>
+            <form>
+                <section class="base_caja_sistem3"><img src="~/Content/Images/img_tarjeta.jpg" alt="" width="480" height="680" /></section>
+            </form>
+        </section>
+
+        <section class="base_contenido3">
+            <section class="beneficios">
+                <section class="base_beneficios">
+                    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+                    <div class="video-container">
+                        <div id="beneficio1"></div>
+                    </div>
+                </section>
+                <section class="base_beneficios_2">
+                    <span class="titulo_pagina2"><img src="~/Content/Images/img_beneficios_4.jpg" alt="" width="870" height="188" /></span><span class="titulo_pagina2">
+                        <br>
+                        Producto Gratis
+                    </span><br><br>
+                    Utilizando tu Monedero del Ahorro en cada compra, podrás acumular piezas de artículos participantes y disfrutar de piezas gratis.
+                    <br />
+                    <br />
+                </section>
+            </section>
+
+            <section class="beneficios">
+                <section class="base_beneficios_3">
+                    <span class="titulo_pagina2"><img src="~/Content/Images/img_beneficios_5.jpg" alt="" width="870" height="166" /></span><span class="titulo_pagina2">
+                        <br>
+                        Dinero de verdad
+                    </span><br><br>
+                    Al utilizar tu Monedero del Ahorro te recompensamos con dinero electrónico en productos participantes el cual podrás utilizarlo en futuras compras.<br>
+                    <br />
+                </section>
+                <section class="base_beneficios">
+                    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+                    <div class="video-container">
+                        <div id="beneficio2"></div>
+                    </div>
+                </section>
+            </section>
+
+            <section class="beneficios">
+                <section class="base_beneficios">
+                    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+                    <div class="video-container">
+                        <div id="beneficio3"></div>
+                    </div>
+                </section>
+                <section class="base_beneficios_2">
+                    <img src="~/Content/Images/img_beneficios_6.jpg" alt="" width="870" height="228" /><br>
+                    Tus compras también te pueden acumular puntos record. Cuando acumules 100 puntos record del Ahorro, automáticamente te regalamos $100 pesos en Dinero Electrónico.<br>
+                    <br />
+                    <span class="notas">
+                        *La redención del dinero electrónico sólo aplica en sucursales de Farmacias del Ahorro.
+                        <br />
+                        *No aplica para el pago de servicios, cigarros o recargas.
+                    </span>
+                </section>
+            </section>
+        </section>
+
+    </div>
+
+    <script>
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var beneficio1;
+        var beneficio2;
+        var beneficio3;
+        function onYouTubeIframeAPIReady() {
+            beneficio1 = new YT.Player('beneficio1', {
+                height: '100%',
+                width: '100%',
+                videoId: 'WvZ6VU6t9QI'
+            });
+            beneficio2 = new YT.Player('beneficio2', {
+                height: '100%',
+                width: '100%',
+                videoId: 'G4R9VQWb77Y'
+            });
+            beneficio3 = new YT.Player('beneficio3', {
+                height: '100%',
+                width: '100%',
+                videoId: 'MHcDnvgBsdQ'
+            });
+        }
+    </script>
+</body>
+</html>

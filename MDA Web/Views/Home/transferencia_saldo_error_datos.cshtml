@@ -1,0 +1,146 @@
+﻿@model MDA_Web.Models.TransferenciaDatosModel
+@{
+    ViewBag.Title = "Monedero del ahorro";
+    var Mensaje = TempData["Mensaje"] as string;
+    string ErrorLogin = "* " + (ViewBag.ErrorLogin ?? "");
+
+}
+<!doctype html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="~/Scripts/formcheck.js"></script>
+    <script>
+        history.pushState(null, null, window.location.href);
+        window.addEventListener('popstate', function (event) {
+            history.pushState(null, null, window.location.href);
+        });
+    </script>
+
+
+
+</head>
+
+<body>
+    <div id="contenedor">
+        <section class="base_gris"></section>
+
+        <section class="base_contenido">
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">Transferencia de saldo</span><br><br>
+                <span class="texto_pagina">
+                    ¿Necesita realizar una transferencia de saldo?<br><br>
+                    Al momento de realizar una transferencia con tu monedero se trasladarán todos tus beneficios como saldo y piezas gratis acumuladas a un nuevo monedero. Puedes realizarlo tu mismo siguiendo estos pasos:<br>
+                    <br>
+                    1. Inicia sesión con los 13 dígitos de tu monedero del ahorro, así como tu fecha de nacimiento.<br><br>
+                    2. En el apartado de transferencia de saldo, ingresa tu monedero origen y destino.<br>
+                    <br>
+                    3. Da click en validar.<br><br>
+                    4. Revisa que tu datos se encuentren correctamente.<br><br>
+                    5. Y listo, se ha realizado tu transferencia.<br><br>
+
+                    O te podemos apoyar a través de las siguientes opciones:<br><br>
+                    •Llamando al <strong> 800 711 2222</strong> en donde nuestros operadores te estarán brindado el apoyo.<br>
+                    <br>
+                    •Mandando mensaje por nuestras redes sociales dando<a href="https://www.fahorro.com/" target="_blank"> click aquí</a>. <br>
+                    <br>
+                    •Escríbenos <a href="@Url.Action("Contacto", "Home")">aquí</a>.
+                </span>
+            </section>
+
+            @*Validación*@
+            @if (Mensaje == null)
+            {
+                <section class="base_caja_sistem">
+                    <div id="cuadro_titulo">Transferencia de saldo </div>
+
+                    <div id="cuadro_text1">
+                        <span style="font-size:11px;">
+                            <em>
+                                Tu transferencia no se ha realizado!.<br />
+                                Por favor, revisa la informaci&oacute;n que ingresaste e intenta de nuevo:<br /><br /><br />
+                            </em>
+                        </span>
+                    </div>
+                    <div id="cuadro_text1"></div><br>
+                    <div id="cuadro_text1"></div><br>
+                    <div id="cuadro_text1">
+                        <span style="font-size:16px; color:#F00;">Tarjeta Origen: @Model.tarjetaorigen [-]</span><br />
+                    </div>
+                    <div id="cuadro_text1">
+                        <span style="font-size:16px; color:#00F;">Tarjeta Destino: @Model.tarjetadestino [+]</span><br />
+                    </div>
+                    <div id="cuadro_text1">
+                        <span style="font-size:16px; font-weight:bold;">Saldo a Transferir: e$ 0.00</span><br />
+                    </div>
+                    <div id="cuadro_text1">
+                    </div>
+                    <div id="cuadro_text1">
+                    </div>
+                    <div id="cuadro_text1">
+                        <span style="font-size:11px;">
+                            <em>
+                                Si deseas iniciar de nuevo la transferencia, haz click <a href="transferencia_saldo" target="_self">aqu&iacute;</a>.
+                                Cualquier duda o comentario <a href="https://www.fahorro.com/medios-de-contacto" target="_self">cont&aacute;ctanos</a> o llamanos al <strong>8007112222</strong> para intentar de nuevo tu transferencia.
+                            </em>
+                        </span>
+                    </div>
+                </section>
+
+            }
+            else
+            {
+                <section class="base_caja_sistem">
+                    <div id="cuadro_titulo">Transferencia de saldo </div>
+                    <div id="cuadro_text1">
+                        <span style="font-size:11px;">
+                            <em>
+                                Hubo un problema con los datos de la transferencia.<br />
+                                Por favor, llama al 800 711 22 22 para poder aplicar tu transferencia!<br />
+                                <div></div>
+                                <span style="color:#F00;">@Mensaje</span><br />
+                            </em>
+                        </span>
+                    </div>
+                    <div id="cuadro_text1"></div><br>
+                    <div id="cuadro_text1"></div><br>
+                    <div id="cuadro_text1"></div><br>
+                    <div id="cuadro_text1"></div><br>
+                    <div id="cuadro_text1">
+                        <span style="font-size:16px; color:#F00;">Tarjeta Origen: @TempData["tarjetaorigen"] [-]</span><br />
+                    </div>
+                    <div id="cuadro_text1">
+                        <span style="font-size:16px; color:#00F;">Tarjeta Destino: @TempData["tarjetadestino"] [+]</span><br />
+                    </div>
+                    <div id="cuadro_text1">
+                        <span style="font-size:16px; font-weight:bold;">Saldo a Transferir: e$ 0.00</span><br />
+                    </div>
+                    <div id="cuadro_text1">
+                    </div>
+                    <div id="cuadro_text1">
+                    </div>
+                    <div id="cuadro_text1">
+                        <span style="font-size:11px;">
+                            <em>
+                                Si deseas iniciar de nuevo la transferencia, haz click <a href="transferencia_saldo" target="_self">aqu&iacute;</a>.
+                                Cualquier duda o comentario <a href="https://www.fahorro.com/medios-de-contacto" target="_self">cont&aacute;ctanos</a> o llamanos al <strong>8007112222</strong> para intentar de nuevo tu transferencia.
+                            </em>
+                        </span>
+                    </div>
+                </section>
+
+            }
+
+            </section>
+
+    </div>
+</body>
+</html>

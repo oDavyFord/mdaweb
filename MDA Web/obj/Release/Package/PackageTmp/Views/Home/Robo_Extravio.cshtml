@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "robo_extravio";
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="contenedor">
+        
+
+        <section class="base_gris"></section>
+        <section class="base_contenido2">
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">Robo o extravío ¿Qué hacer?</span><br /><br />
+                <span class="texto_pagina">
+                    <strong>¿Qué sucede si extravié o me robaron mi tarjeta?</strong><br />
+                    Solicita un nuevo monedero en tu sucursal más cercana o por medio de la aplicación de Farmacias del Ahorro.
+                    <br /><br />
+                    <strong>Si extravié o me robaron mi monedero del ahorro ¿Puedo recuperar mi dinero electrónico?</strong><br />
+                    Sí, solicitando un monedero nuevo puedes realizar una transferencia de saldo dando
+                    <a href="@Url.Action("transferencia_saldo", "Home")">click aquí</a> o bien, comunicándote al <strong>800 711 22 22.</strong>
+                    <br /><br />
+                    <strong>¿Cómo puedo evitar que hagan uso de mi monedero del ahorro si lo perdí o extravié?</strong><br />
+                    Al momento en que extravíes tu tarjeta o seas víctima de un robo puedes solicitar que sea bloqueada, así de esta manera nadie podrá hacer uso del saldo o de los beneficios de tu monedero,
+                    sin embargo, posterior a esto deberás solicitar un nuevo monedero para que se transfiera el saldo del monedero anterior.<br />
+                    <br />
+                    <strong>Si tienes alguna otra duda contáctanos <a href="@Url.Action("Contacto", "Home")">aquí</a>.</strong>
+                </span>
+            </section>
+            <form>
+                <section class="base_caja_sistem2">
+                    <img src="~/Content/Images/img_tarjeta.jpg" alt="" width="480" height="680" />
+                </section>
+            </form>
+        </section>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+﻿/*For reCaptcha size custom*/
+.g-recaptcha {
+    -webkit-transform: scale(0.85);
+    -moz-transform: scale(0.85);
+    -ms-transform: scale(0.85);
+    -o-transform: scale(0.85);
+    transform: scale(0.85);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+
+
+    float: left;
+    color: #2A317D;
+    margin-left: 25px;
+    margin-top: 80px;
+    margin-right: 25px;
+    margin-bottom: 60px;
+}

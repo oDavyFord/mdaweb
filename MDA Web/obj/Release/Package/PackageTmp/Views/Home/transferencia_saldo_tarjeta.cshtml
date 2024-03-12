@@ -1,0 +1,219 @@
+﻿@model MDA_Web.Models.TransferenciaTarjetaModel
+@{
+    ViewBag.Title = "Monedero del ahorro";
+    string ErrorLogin = "* " + (ViewBag.ErrorLogin ?? "");
+    var isSessionActive = Session["UserName"] != null;
+   // var tarjeta = TempData["cardNumber"] as string;
+    var cardNumberValue = isSessionActive && Session["tarjeta"] != null ? Session["tarjeta"].ToString() : string.Empty;
+    var clientNameValue = isSessionActive && Session["UserName"] != null ? Session["UserName"].ToString() : string.Empty;
+
+}
+<!doctype html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="~/Scripts/formcheck.js"></script>
+
+    <script type="text/javascript" language="JavaScript">
+        var tarjeta = cardNumberValue;
+        function CheckRequiredFieldsUpdate() {
+            var errorMessage = "";
+
+            // Validaciones
+            if (WithoutContent(document.frmtransferencia.origen.value)) {
+                errorMessage += "\n- Ingresa el número de tarjeta origen para validar la transferencia.";
+            } else if (document.frmtransferencia.origen.value.length !== 13) {
+                errorMessage += "\n- El número de tarjeta origen debe tener exactamente 13 dígitos.";
+            }
+
+            if (WithoutContent(document.frmtransferencia.destino.value)) {
+                errorMessage += "\n- Ingresa el número de tarjeta destino para validar la transferencia.";
+            } else if (document.frmtransferencia.destino.value.length !== 13) {
+                errorMessage += "\n- El número de tarjeta destino debe tener exactamente 13 dígitos.";
+            }
+
+            if (document.frmtransferencia.origen.value === document.frmtransferencia.destino.value) {
+                errorMessage += "\n- Las tarjetas origen y destino no pueden ser iguales.";
+            }
+            if (document.frmtransferencia.origen.value !== document.frmtransferencia.tarjeta.value && document.frmtransferencia.destino.value !== document.frmtransferencia.tarjeta.value) {
+                errorMessage += "\n- Una de las tarjetas debe ser la misma que la asociada a la sesión.(" + @Model.tarjeta+")";
+            }
+
+            if (errorMessage.length > 0) {
+                alert('Por favor, corrige los siguientes errores:' + errorMessage);
+                return false;
+            }
+
+            return true;
+        }
+
+
+        // Para solo recibir números
+        function numbersonlylogin(myfield, e, dec) {
+            var key;
+            var keychar;
+
+            if (window.event)
+                key = window.event.keyCode;
+            else if (e)
+                key = e.which;
+            else
+                return true;
+            keychar = String.fromCharCode(key);
+
+            if ((key == null) || (key == 0) || (key == 8) ||
+                (key == 9) || (key == 13) || (key == 27))
+                return true;
+
+            else if ((("0123456789").indexOf(keychar) > -1)) {
+                if (myfield.value.length < 13) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            else if (dec && (keychar == ".")) {
+                myfield.form.elements[dec].focus();
+                return false;
+            }
+            else
+                return false;
+        }
+        function nextfieldlogin(origen, longitud, destino) {
+            var letters = origen.value.length + 1;
+            if (letters <= longitud) {
+                origen.focus();
+            } else {
+                //document.frmafiliacion.mes.focus();
+                document.frmmalogininterno.elements[destino].focus();
+            }
+        }
+
+        // Función que valida que la fecha de nacimiento sea válida
+        function checkdatelogin(fecha) {
+            var validformat = /^\d{2}\/\d{2}\/\d{4}$/
+            var returnval = false
+            if (!validformat.test(fecha))
+                returnval = false
+            else {
+                var monthfield = fecha.split("/")[0]
+                var dayfield = fecha.split("/")[1]
+                var yearfield = fecha.split("/")[2]
+                var dayobj = new Date(yearfield, monthfield - 1, dayfield)
+                if ((dayobj.getMonth() + 1 != monthfield) || (dayobj.getDate() != dayfield) || (dayobj.getFullYear() != yearfield))
+                    returnval = false
+                else
+                    returnval = true
+            }
+            return returnval
+        }
+
+        // reCAPTCHA
+        var recapHeader;
+        var onloadCallback = function () {
+            // reCAPTCHA V2 Invisible
+            if ($('#recaptchaHeader').length) {
+                recapHeader = grecaptcha.render('recaptchaHeader', {
+                    'sitekey': sitekeyv2invisible
+                }, true);
+            }
+
+            // reCAPTCHA V2
+            if ($('#recaptchaLogin').length) {
+                grecaptcha.render('recaptchaLogin', {
+                    'sitekey': sitekeyv2
+                });
+            }
+        };
+       
+    history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function (event) {
+        history.pushState(null, null, window.location.href);
+    });
+    </script>
+
+</head>
+
+<body>
+    <div id="contenedor">
+        <section class="base_gris"></section>
+
+        <section class="base_contenido">
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">Transferencia de saldo</span><br><br>
+                <span class="texto_pagina">
+                    ¿Necesita realizar una transferencia de saldo?<br><br>
+                    Al momento de realizar una transferencia con tu monedero se trasladarán todos tus beneficios como saldo y piezas gratis acumuladas a un nuevo monedero. Puedes realizarlo tu mismo siguiendo estos pasos:<br>
+                    <br>
+                    1. Inicia sesión con los 13 dígitos de tu monedero del ahorro, así como tu fecha de nacimiento.<br><br>
+                    2. En el apartado de transferencia de saldo, ingresa tu monedero origen y destino.<br>
+                    <br>
+                    3. Da click en validar.<br><br>
+                    4. Revisa que tu datos se encuentren correctamente.<br><br>
+                    5. Y listo, se ha realizado tu transferencia.<br><br>
+
+                    O te podemos apoyar a través de las siguientes opciones:<br><br>
+                    •Llamando al <strong> 800 711 2222</strong> en donde nuestros operadores te estarán brindado el apoyo.<br>
+                    <br>
+                    •Mandando mensaje por nuestras redes sociales dando<a href="https://www.fahorro.com/" target="_blank"> click aquí</a>. <br>
+                    <br>
+                    •Escríbenos <a href="@Url.Action("Contacto", "Home")">aquí</a>.
+                </span>
+            </section>
+
+
+
+            @using (Html.BeginForm("SaveTransferenciaSaldoTarjeta", "Home", FormMethod.Post, new { id = "frmtransferencia", name = "frmtransferencia", onsubmit = "return CheckRequiredFieldsUpdate();" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.fechanacimiento)
+                @Html.HiddenFor(model => model.saldo)
+                @Html.HiddenFor(model => model.tarjeta)
+
+                <section class="base_caja_sistem">
+                    <div id="cuadro_titulo">Transferencia de saldo</div>
+                    <div id="cuadro_text1">Tarjeta Origen:</div>
+                    <div id="cuadro_campo1">
+                        @Html.TextBoxFor(model => model.tarjetaorigen, new { id = "origen", name = "origen", @value = Model.tarjetaorigen, @class = "tarjeta4_campo", size = "20", onkeypress = "return numbersonlylogin(this, event);", style = "padding: 3px 3px 3px 3px;", autocomplete = "off" })
+                        <br>
+                        <span style="color:#666; font-size:9px;">
+                            &nbsp;&nbsp;&nbsp;&middot; N&uacute;mero de tarjeta que otorgar&aacute; el dinero electr&oacute;nico.
+                        </span>
+                        <br>
+                    </div>
+                    <div id="cuadro_text1">
+                        <!-- Puedes añadir contenido aquí si es necesario -->
+                    </div>
+                    <div id="cuadro_text1">Tarjeta Destino</div>
+                    <div id="cuadro_campo1">
+                        @Html.TextBoxFor(model => model.tarjetadestino, new { id = "destino", name = "destino", @value = Model.tarjetadestino, @class = "tarjeta4_campo", size = "20", onkeypress = "return numbersonlylogin(this, event);", style = "padding: 3px 3px 3px 3px;", autocomplete = "off" })
+                        <br>
+                        <span style="color:#666; font-size:9px;">
+                            &nbsp;&nbsp;&nbsp;&middot; N&uacute;mero de tarjeta que recibir&aacute; el dinero electr&oacute;nico.<br />
+                            &nbsp;&nbsp;&nbsp;&middot; Beneficiario de la transferencia.
+                        </span>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div id="cuadro_check">
+                        <!-- Puedes añadir contenido aquí si es necesario -->
+                    </div>
+                    <div id="cuadro_boton">
+                        <input name="Validar" type="submit" class="boton_cuadro_ingresar" value="Validar" />
+                    </div>
+                </section>
+            }
+
+</div>
+</body>
+</html>
