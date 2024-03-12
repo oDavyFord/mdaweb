@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="contenedor">
+        <section class="home_base_contenido">
+            <section class="home_base_slider"><a href="@Url.Action("Beneficios", "Home")"><img src="Content/Images/banner_home_1.jpg" alt="" /></a></section>
+            <section class="home_base_modulo">
+                <div class="base_modulo_a">
+                    <a  href="@Url.Action("transacciones_consulta", "Home")">
+                        <img src="@Url.Content("~/Content/Images/modulos_home_01.jpg")" alt="" width="384" height="591" />
+                    </a>
+                </div>
+                <div class="base_modulo">
+                    <a href="@Url.Action("transferencia_saldo", "Home")">
+                        <img src="@Url.Content("~/Content/Images/modulos_home_02.jpg")" alt="" width="384" height="591" />
+                    </a>
+                </div>
+                <div class="base_modulo">
+                    <a href="@Url.Action("robo_extravio", "Home")">
+                        <img src="@Url.Content("~/Content/Images/modulos_home_04.jpg")" alt="" width="384" height="591" />
+                    </a>
+                </div>
+                <div class="base_modulo_b">
+                    <a href="https://www.fahorro.com/monedero-del-ahorro">
+                        <img src="@Url.Content("~/Content/Images/modulos_home_05.jpg")" alt="" width="385" height="591" />
+                    </a>
+                </div>
+            </section>
+            <section class="base_video">
+                <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+                <div class="video-container">
+                    <div id="player"></div>
+                </div>
+
+                <script>
+                    var tag = document.createElement('script');
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                    var player;
+                    function onYouTubeIframeAPIReady() {
+                        player = new YT.Player('player', {
+                            height: '100%',
+                            width: '100%',
+                            videoId: 'Vr5wNuY2NRU',
+                            playerVars: { 'autoplay': 1, 'controls': 0 }
+                        });
+                    }
+                </script>
+            </section>
+            <section class="base_video_num">
+                <a class="btn_pag" href="https://www.youtube.com/user/fahorromx" target="_blank">ver más videos&nbsp;&nbsp;></a>
+            </section>
+        </section>
+    </div>
+</body>
+</html>

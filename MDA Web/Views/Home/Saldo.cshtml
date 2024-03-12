@@ -1,0 +1,191 @@
+﻿@model MDA_Web.Models.TransaccionesConsultaModel
+
+@{
+    ViewBag.Title = "saldo";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Monedero del Ahorro | Detalle Saldo</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        <!--
+        body {
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+        }
+
+        .tablasaldocontainer {
+            border-collapse: collapse;
+            font-size: 10px;
+            border: 1px solid #ADB1BD;
+            background-color: #FFFFFF;
+            margin: auto;
+            width: 98%;
+        }
+
+        .tablasaldo {
+            border-collapse: collapse;
+            font-size: 10px;
+            background-color: #FFFFFF;
+            margin: auto;
+            width: 96%;
+        }
+
+            .tablasaldo thead tr {
+                border-top: 2px solid #6D6E71;
+                border-bottom: 2px solid #6D6E71;
+                background-color: #F0F0F0;
+            }
+
+            .tablasaldo thead td {
+                font-size: 10px;
+                padding: 0.8em;
+                font-weight: bold;
+            }
+
+            .tablasaldo tr {
+                border-bottom: 1px solid #ADB1BD;
+            }
+
+            .tablasaldo td {
+                font-size: 10px;
+                padding: 0.5em;
+            }
+
+                .tablasaldo td.abono {
+                    color: #00F;
+                }
+
+                .tablasaldo td.cargo {
+                    color: #F00;
+                }
+
+        -->
+    </style>
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0" onload="javascript:if(top.location!=self.location) top.location=self.location;">
+    <h1>Monedero del Ahorro | Detalle Saldo</h1>
+
+    <p>Tarjeta: @Model.card</p>
+    <p>Nombre: @Model.clienteNombre</p>
+    <p>Saldo Desglose 1: @Model.SaldoDesglose1</p>
+    <p>Saldo Desglose 2: @Model.SaldoDesglose2</p>
+
+    <table width="540" cellpadding="0" cellspacing="0" align="center">
+        <tr>
+            <td class="top txt_gris">
+                <br />
+                <table class="tablasaldocontainer">
+                    <tr>
+                        <td>
+                            <br />
+                            <table class="tablasaldo">
+                                <tr>
+                                    <td colspan="2"><span style="font-size:16px; font-weight:bold;">Estado de Cuenta</span></td>
+                                </tr>
+                                <tr>
+                                    <td width="60%">
+                                        <span style="font-size:18px; font-weight:bold;">
+                                            <strong>@Model.card</strong><br>
+
+                                        </span><br />
+                                        <span style="font-size:12px; font-weight:normal;"> @Model.clienteNombre</span>
+                                    </td>
+                                    <td width="40%" valign="bottom" align="right">
+                                        Movimientos al<br /><strong>@DateTime.Now.ToString("dd-MMM-yyyy")</strong>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <span style="font-size:10px; font-weight:normal;">
+                                            Promoci&oacute;n: Con el e$100 + e$ 100 de Monedero del Ahorro ¡Acumula y Gana!<br />
+                                            <span style="font-size:12px; font-weight:normal; color:#F00;">
+                                                <em>Tu record de la promoci&oacute;n es <strong>e$ @Model.SaldoDesglose1</strong> y te faltan <strong>e$ @Model.SaldoDesglose2</strong>  para ganarte un nuevo bono!!!</em>
+                                            </span>
+
+                                        </span>
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <br />
+                            <table class="tablasaldo">
+                                <thead>
+                                    <tr>
+                                        <td align="center">Fecha</td>
+                                        <td>Movimiento</td>
+                                        <td align="right">Ticket</td>
+                                        <td align="right">Abono</td>
+                                        <td align="right">Cargo</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model?.Transactions != null && Model.Transactions.Any())
+                                    {
+                                        foreach (var transaction in Model.Transactions)
+                                        {
+                                            <tr>
+                                                <td align="center">@transaction.Fecha</td>
+                                                <td>@transaction.TipoMovimiento<br /><em>@transaction.NoSucursal</em></td>
+                                                <td align="right">
+                                                    <a href="@Url.Action("DetalleTicket", "Home", new { cardnumber = Model.card, transactionid = transaction.TransactionId })" title="Ver detalle movimiento">@transaction.Invoice</a>
+                                                </td>
+                                                <td align="right" class="abono">e$ @transaction.Abono.ToString("N2")</td>
+                                                <td align="right" class="cargo">e$ @(transaction.Cargo.ToString("N2"))</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td align="center" colspan="5"><em>Sin movimientos</em></td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                                <tr>
+                                    <td colspan="5" align="right"><strong><em>* &Uacute;ltimos tres meses</em></strong></td>
+                                </tr>
+                            </table>
+                            <br />
+
+                            <table width="90%" border="0" cellspacing="3" align="center">
+                                <tr>
+                                    <td>
+                                        <span style="font-size:8px;">
+                                            + El dinero electrónico acumulado en tu tarjeta no tiene fecha de caducidad y podrás utilizarlo en el momento que lo requieras, visítanos regularmente y no dejes de utilizar tu Monedero del Ahorro para acumular más dinero electrónico.<br /><br />
+                                            ++ Si tienes pendiente una entrega a domicilio (pedido de servicio a domicilio) no podrás utilizar tu dinero electrónico.
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <p>
+                                <br><br>
+                                @{
+                                    var url = "https://storage.orveecrm.com/monederodelahorro/getOrbisBalanceSheet.php?n=" + Model.card;
+                                    var webClient = new System.Net.WebClient();
+                                    var htmlContent = webClient.DownloadString(url);
+                                }
+                                @Html.Raw(htmlContent)
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Faq";
+    Response.ContentType = "text/html; charset=utf-8";
+    Response.Expires = -1;
+    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+    Response.Cache.SetNoStore();
+    Response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+    Response.AddHeader("Pragma", "no-cache");
+    Response.Headers.Remove("X-Frame-Options");
+    Response.AddHeader("X-Frame-Options", "SAMEORIGIN");
+
+    System.Web.HttpContext.Current.Session["session.cookie_httponly"] = 1;
+
+    System.Web.HttpContext.Current.Session["session.use_only_cookies"] = 1;
+
+    System.Web.HttpContext.Current.Session["session.cookie_secure"] = 1;
+    System.Web.HttpContext.Current.Session["session.cookie_samesite"] = "Strict";
+
+    int SSL_Port = 448;
+
+    //if (!Request.IsSecureConnection)
+    //{
+    //    string redirect = "https://" + Request.ServerVariables["HTTP_HOST"] + ":" + SSL_Port + Request.ServerVariables["URL"];
+    //    Response.Redirect(redirect);
+    //}
+
+    Session.Abandon();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="contenedor">
+
+
+        <section class="base_gris"></section>
+        <section class="base_contenido2">
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">FAQ´s?</span><br>
+                <strong>
+                    <br>
+                </strong><span class="texto_pagina">
+                    <strong>1. ¿Qué es el programa Monedero del Ahorro?</strong><br>
+                    Monedero del Ahorro es un sistema en el que por cada compra que realices de productos participantes podrás acumular piezas, puntos record o dinero electrónico.<br>
+                    <strong>
+                        <br>
+
+                        2.- ¿Cuáles son los beneficios del Monedero del Ahorro?
+                    </strong><br>
+                    Lo más importante para Farmacias del Ahorro son sus clientes y por eso premia tu lealtad con Monedero del Ahorro.<br>
+                    El dinero electrónico acumulado en tu tarjeta no tiene fecha de caducidad y podrás utilizarlo en el momento que lo requieras.<br>
+                    <br>
+                    Podrás utilizar tu Monedero del Ahorro en todas las sucursales de Farmacias del Ahorro, Servicio a Domicilio, Tienda en Línea (<a href="https://www.fahorro.com" target="_blank">www.fahorro.com</a>) y Aplicación Móvil así como Farmacias Dermatológicas.<br>
+                    <br>
+                    Además, disfrutar de otros beneficios como descuentos en establecimientos afiliados al programa de Monedero del Ahorro.<br>
+                    <br>
+                    Conoce nuestro catálogo de promociones y descubre algunos de los beneficios que recibirás con tu Monedero del Ahorro.<br>
+                    <br>
+                    - Podrás consultar tu saldo en este sitio web, directamente en farmacia, en la app móvil o bien enviándonos un correo a <a href="mailto:monederodelahorro@fahorro.com.mx">monederodelahorro@fahorro.com.mx</a><br><br>
+
+                    <strong>3. ¿Para quién está dirigido el programa Monedero del Ahorro?</strong><br>
+                    Monedero del Ahorro es un programa para todas las personas que realicen compras en Farmacias del Ahorro y desean recibir beneficios. <br>
+                    <strong>
+                        <br>
+
+                        4. ¿Cómo me inscribo a Monedero del Ahorro?
+                    </strong><br>
+                    Para obtener tu Monedero del Ahorro acude a cualquier sucursal de Farmacias del Ahorro o registrarte por medio de la aplicación móvil. A partir de ese momento podrás empezar a disfrutar de los beneficios que Monedero del Ahorro tiene para ti.<br>
+                    <br>
+
+                    <strong>5. ¿Cómo funciona el Monedero del Ahorro?</strong><br>
+                    Al momento de realizar compras de productos participantes presenta tu tarjeta de Monedero del Ahorro, y se te abonará el porcentaje de dinero electrónico basado en el valor de cada uno de los productos que compres. <br>
+                    <br>
+                    Es importante que proporciones el Monedero del Ahorro antes de que se efectúe la compra para que se acumule correctamente la compra en el plan de lealtad y se realice el abono correspondiente. <br>
+                    <br>
+                    En tus próximas visitas podrás utilizar el dinero electrónico acumulado en tu tarjeta para adquirir cualquier producto dentro de la farmacia (Aplican restricciones).
+                </span>
+
+            </section>            <form>
+                <section class="base_caja_sistem2"><img src="~/Content/Images/img_tarjeta.jpg" alt="" width="480" height="680" /></section>
+            </form>
+            <div id="btn_paginador"><a class="btn_pag" href="faq">1-5</a> <a class="btn_pag" href="faq_02">6-10</a> <a class="btn_pag" href="faq_03">11-13</a> <a class="btn_pag" href="faq_02">></a></div>
+        </section>
+
+    </div>
+</body>
+</html>
+

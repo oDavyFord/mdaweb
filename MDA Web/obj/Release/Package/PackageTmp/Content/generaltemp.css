@@ -1,0 +1,18 @@
+﻿
+.btn_acceso_login {
+    color: #FFFFFF;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: normal;
+    background-color: #f22536;
+    border-radius: 6px;
+    border: 2px solid #f22536;
+}
+
+.btn_acceso_login:hover {
+    color: #FFFFFF;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}

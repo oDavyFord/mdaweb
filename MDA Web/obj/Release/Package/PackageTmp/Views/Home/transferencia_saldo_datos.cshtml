@@ -1,0 +1,264 @@
+﻿@model MDA_Web.Models.TransferenciaModel
+@{
+    ViewBag.Title = "Monedero del ahorro";
+
+    string ErrorLogin = "* " + (ViewBag.ErrorLogin ?? "");
+}
+<!doctype html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="~/Scripts/formcheck.js"></script>
+
+    <script type="text/javascript" language="JavaScript">
+
+        function CheckRequiredFieldsUpdate() {
+            var errormessage = new String();
+            // Put field checks below this point.
+
+            // Validaciones
+            //if (WithoutContent(document.frmtransferencia.nombre.value)) {
+            //    errormessage += "\n- Ingresa tu nombre!.";
+            //}
+
+            //if (WithoutContent(document.frmtransferencia.paterno.value)) {
+            //    errormessage += "\n- Ingresa tus apellidos!.";
+            //}
+
+            if (WithoutContent(document.frmtransferencia.email.value)) {
+                errormessage += "\n- Ingresa tu e-mail!.";
+            } else {
+                if (!isValidEmail(document.frmtransferencia.email.value)) {
+                    errormessage += "\n- Ingresa un e-mail válido!.";
+                }
+            }
+
+            if (WithoutContent(document.frmtransferencia.celular.value)) {
+                errormessage += "\n- Ingresa un teléfono de contacto!.";
+            }
+
+            // if(document.frmtransferencia.telefono.value.length > 0 && document.frmtransferencia.telefono.value.length < 10) {
+            //     errormessage += "\n- Ingresa tu teléfono completo !.";
+            // }
+
+            if (document.frmtransferencia.celular.value.length > 0 && document.frmtransferencia.celular.value.length < 10) {
+                errormessage += "\n- Ingresa tu celular completo !.";
+            }
+
+
+            // Put field checks above this point.
+            if (errormessage.length > 2) {
+                alert('Para poder aplicar la transferencia, por favor: ' + errormessage);
+                return false;
+            }
+
+            //document.frmactualiza.submit();
+            return true;
+
+        }
+
+        function alpha(e, allow) {
+            var k;
+            k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+            return (allow.indexOf(String.fromCharCode(k)) != -1);
+        }
+
+        function isValidEmail(strEmail) {
+            var reg = /^([A-Za-z0-9_\-\.])+\@@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+            var address = strEmail;
+            if (reg.test(address) == false) {
+                return false;
+            }
+            return true;
+        }
+         document.getElementById("btnCancelar").addEventListener("click", function(event) {
+            event.preventDefault();
+             window.location.href = "@Url.Action("transferencia_saldo", "Home")", Session["UserName"]= null;
+        });
+
+    </script>
+    <script type="text/javascript" language="JavaScript">
+    function cancelarTransferencia() {
+        window.location.href = "@Url.Action("transferencia_saldo", "Home")";
+        Session["UserName"] = null;
+
+    }
+    </script>
+
+
+</head>
+
+<body>
+    <div id="contenedor">
+        <section class="base_gris"></section>
+
+        <section class="base_contenido">
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">Transferencia de saldo</span><br><br>
+                <span class="texto_pagina">
+                    ¿Necesita realizar una transferencia de saldo?<br><br>
+                    Al momento de realizar una transferencia con tu monedero se trasladarán todos tus beneficios como saldo y piezas gratis acumuladas a un nuevo monedero. Puedes realizarlo tu mismo siguiendo estos pasos:<br>
+                    <br>
+                    1. Inicia sesión con los 13 dígitos de tu monedero del ahorro, así como tu fecha de nacimiento.<br><br>
+                    2. En el apartado de transferencia de saldo, ingresa tu monedero origen y destino.<br>
+                    <br>
+                    3. Da click en validar.<br><br>
+                    4. Revisa que tu datos se encuentren correctamente.<br><br>
+                    5. Y listo, se ha realizado tu transferencia.<br><br>
+
+                    O te podemos apoyar a través de las siguientes opciones:<br><br>
+                    •Llamando al <strong> 800 711 2222</strong> en donde nuestros operadores te estarán brindado el apoyo.<br>
+                    <br>
+                    •Mandando mensaje por nuestras redes sociales dando<a href="https://www.fahorro.com/" target="_blank"> click aquí</a>. <br>
+                    <br>
+                    •Escríbenos <a href="@Url.Action("Contacto", "Home")">aquí</a>.
+                </span>
+            </section>
+
+
+
+
+            @using (Html.BeginForm("SaveTransferenciaSaldoDatos", "Home", FormMethod.Post, new { id = "frmtransferencia", name = "frmtransferencia", onsubmit = "return CheckRequiredFieldsUpdate();" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("fechanacimiento", Model.fechanacimiento)
+                @Html.Hidden("saldo", Model.saldo)
+                @Html.Hidden("tarjetaorigen", Model.tarjetaorigen)
+                @Html.Hidden("tarjetadestino", Model.tarjetadestino)
+
+        <section class="base_caja_sistem" style="height:920px !important;">
+            <div id="cuadro_titulo">Transferencia de saldo</div>
+
+            <div id="cuadro_text1">
+                Tarjeta Origen: <span style="font-size:16px; color:#F00;">
+                    @Html.DisplayFor(model => model.tarjetaorigen) &nbsp;[-]
+                </span><br />
+                <span style="font-style:italic;color:#666; font-size:9px;">* Esta tarjeta ser&aacute; bloqueada permanentemente.</span><br />
+            </div>
+            <div id="cuadro_text1"></div>
+
+            <div id="cuadro_text1">
+                Tarjeta Destino: <span style="font-size:16px; color:#00F;">
+                    @Html.DisplayFor(model => model.tarjetadestino) &nbsp;[+]
+                </span>
+            </div>
+            <div id="cuadro_text1"></div>
+
+            <div id="cuadro_text1">
+                Saldo a Transferir:  <span style="font-size:24px; font-weight:bold;">
+                    e$ @string.Format("{0:0.00}", decimal.Parse(Model.saldo))
+
+
+                </span>
+            </div>
+            <div id="cuadro_text1"></div>
+
+            @*<div id="cuadro_text1">*Nombre:</div>
+        <div id="cuadro_campo1">
+            @Html.TextBoxFor(model => model.nombre, new { id = "nombre", @class = "tarjeta4_campo", type = "text", size = "40", @value = Model.nombre })
+            <br />
+            <span style="color:#666; font-size:9px;">
+                &nbsp;&nbsp;&nbsp;&middot; Nombre del afiliado de la tarjeta.
+            </span>
+            <br />
+        </div>
+
+        <div id="cuadro_text1">*Apellidos:</div>
+        <div id="cuadro_campo1">
+            @Html.TextBoxFor(model => model.paterno, new { id = "paterno", @class = "tarjeta4_campo", type = "text", size = "40", @value = Model.paterno })
+            <br />
+            <span style="color:#666; font-size:9px;">
+                &nbsp;&nbsp;&nbsp;&middot; Apellidos del afiliado de la tarjeta.
+            </span>
+            <br />
+        </div>*@
+            <div id="cuadro_text1" style="display: none;">
+                *Nombre:
+            </div>
+            <div id="cuadro_campo1" style="display: none;">
+                @Html.HiddenFor(model => model.nombre, new { id = "nombre", @class = "tarjeta4_campo", type = "text", size = "40", @value = Model.nombre })
+                <br />
+                <span style="color:#666; font-size:9px;">
+                    &nbsp;&nbsp;&nbsp;&middot; Nombre del afiliado de la tarjeta.
+                </span>
+                <br />
+            </div>
+
+            <div id="cuadro_text1" style="display: none;">
+                *Apellidos:
+            </div>
+            <div id="cuadro_campo1" style="display: none;">
+                @Html.HiddenFor(model => model.paterno, new { id = "paterno", @class = "tarjeta4_campo", type = "text", size = "40", @value = string.IsNullOrEmpty(Model.paterno) ? Model.nombre : Model.paterno })
+                <br />
+                <span style="color:#666; font-size:9px;">
+                    &nbsp;&nbsp;&nbsp;&middot; Apellidos del afiliado de la tarjeta.
+                </span>
+                <br />
+            </div>
+
+
+            <div id="cuadro_text1">*E-mail:</div>
+            <div id="cuadro_campo1">
+                @Html.TextBoxFor(model => model.email, new { id = "email", @class = "tarjeta4_campo", type = "text", size = "40", @value = (Model.contacto != 1 ? Model.email : ""), autocomplete = "off" })
+                <br />
+                <span style="color:#666; font-size:9px;">
+                    &nbsp;&nbsp;&nbsp;&middot; Correo electr&oacute;nico del afiliado de la tarjeta.
+                </span>
+                <br /><br />
+            </div>
+
+            <div id="cuadro_text1">*Tel&eacute;fono Celular:</div>
+            <div id="cuadro_campo1">
+                @Html.TextBoxFor(model => model.celular, new { id = "celular", @class = "tarjeta4_campo", type = "text", size = "40", maxlength = "10",  @value = Model.celular, onkeypress = "return numbersonly(this, event);", autocomplete = "off" })
+                <br />
+                <span style="color:#666; font-size:9px;">
+                    &nbsp;&nbsp;&nbsp;&middot; <em>10 d&iacute;gitos (LADA + n&uacute;mero)</em>
+                </span>
+                <br />
+            </div>
+
+            <div id="cuadro_text1">
+                @Html.CheckBoxFor(model => model.permission, new { id = "permission", style = "display:inline !important; -webkit-appearance:checkbox !important;" })&nbsp;
+                <span style="color:#F00;font-size:12px;">
+                    <strong>Acepto recibir informaci&oacute;n sobre Monedero del Ahorro</strong>
+                </span>
+            </div>
+
+
+            <div id="cuadro_text1"></div>
+
+            <div id="cuadro_boton" style="margin-bottom: 21px; margin-top: 10px; text-align: center;">
+                <input name="Transferir" type="submit" class="boton_cuadro_ingresar" style="cursor:pointer;" value="Aplicar" title="Aplicar Transferencia" />
+                <input id="btnCancelar" type="button" class="boton_cuadro_ingresar" title="Cancelar Transferencia" style="cursor:pointer;" value="Cancelar" onclick="cancelarTransferencia()" />
+            </div>
+
+            <div></div>
+
+            <div id="cuadro_text1">
+                <span style="font-size:9px;">
+                    <em>
+                        *Campos obligatorios.<br />
+                        La información que proporciones es totalmente confidencial.
+                        Recopilamos ésta información con fines de identificación y eventualmente contactarte vía correo electrónico enviando información de interés sobre tu Monedero del Ahorro.<br />
+                        Consulta nuestro <a href="https://www.fahorro.com/aviso-de-privacidad" target="_BLANK">Aviso de Privacidad</a><br /><br />
+                    </em>
+                </span>
+            </div>
+
+
+
+        </section>
+            }
+
+
+    </div>
+</body>
+</html>

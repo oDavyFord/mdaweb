@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "alianzas";
+
+    int estadoId = 1; 
+    //int municipioId = 0; 
+
+    bool mostrarAlianzas = estadoId != 0;
+
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="@Url.Content("favicon.ico")">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="contenedor">
+
+        @if (@Model.mostrarMunicipios)
+        {
+            <section class="base_gris"></section>
+
+            <section class="base_contenido3">
+
+                <div id="cuadro_titulo">Alianzas @Model.nombreEstado</div>
+                <section>
+                    <form id="form1" name="form1" method="post"  target="_self">
+                        <tr>
+                            <td class=" txt_gris txt_resalt izq">
+                                Municipio:
+                                <select name="municipioid" id="municipioid" class="txt_gris_ch">
+                                    <option value="">[Seleccione un Municipio]</option>
+                                </select>
+                                <input name="Ver Alianzas" type="submit" value="Ver" />
+                            </td>
+                        </tr>
+                    </form> <br><br>
+
+                </section>
+
+                @{
+                    int alianzas = 0;
+                }
+                <section class="beneficios">
+                    @if (alianzas > 0)
+                    {
+                        <div id="alianza_texto">Contenido de las alianzas para el estado seleccionado.</div>
+                    }
+                    else
+                    {
+                        <div id="alianza_texto"><br><br>No tenemos alianzas en tu estado.</div>
+                    }
+
+
+
+                </section>
+            </section>
+        }
+        else
+        {
+            <section class="base_alianzas">
+                <section class="base_texto_sistem3">
+                    <img src="~/Content/Images/alianzas.png" alt="alianzas" />
+                    <!--<span class="titulo_pagina">Alianzas</span><br><br>
+                    <span class="texto_pagina">
+                        Farmacias del Ahorro tiene para ti beneficios en establecimientos participantes al usar tu monedero del ahorro. <br><br>
+
+                        Solo deberás presentar tu tarjeta de Monedero del Ahorro que te acredita como miembro del programa y listo! Ya estarás disfrutando de los beneficios de los establecimientos participantes.
+                        Consúltalos aquí.
+                    </span>
+
+                    <div class="alianzas_col_base">
+                        <div class="alianzas_col_1"><img src="~/Content/Images/mapa_alianzas_01.png" alt="" width="265" height="169" /></div>
+                        <div class="alianzas_col_2">
+                            <form id="form1" name="form1" method="post" target="_self">
+                                <label for="select" class="alianzas_txt">Estado:</label>
+                                <select name="estadoid" id="estadoid" class="tarjeta4_campo">
+                                    <option value="">[Seleccione un Estado]</option>
+                                    <option value="1" @(Model != null && Model.estadoid == 1 ? "selected" : "")>AGUASCALIENTES</option>
+                                    <option value="2" @(Model != null && Model.estadoid == 2 ? "selected" : "")>BAJA CALIFORNIA</option>
+                                    <option value="3" @(Model != null && Model.estadoid == 3 ? "selected" : "")>BAJA CALIFORNIA SUR</option>
+                                    <option value="4" @(Model != null && Model.estadoid == 4 ? "selected" : "")>CAMPECHE</option>
+                                    <option value="9" @(Model != null && Model.estadoid == 9 ? "selected" : "")>CDMX [DF]</option>
+                                    <option value="7" @(Model != null && Model.estadoid == 7 ? "selected" : "")>CHIAPAS</option>
+                                    <option value="8" @(Model != null && Model.estadoid == 8 ? "selected" : "")>CHIHUAHUA</option>
+                                    <option value="5" @(Model != null && Model.estadoid == 5 ? "selected" : "")>COAHUILA</option>-->
+                                    @*<option value="6" @(Model != null && Model.estadoid == 6 ? "selected" : "")>COLIMA</option>*@
+                                    <!--<option value="10" @(Model != null && Model.estadoid == 10 ? "selected" : "")>DURANGO</option>
+                                    <option value="11" @(Model != null && Model.estadoid == 11 ? "selected" : "")>GUANAJUATO</option>
+                                    <option value="12" @(Model != null && Model.estadoid == 12 ? "selected" : "")>GUERRERO</option>
+                                    <option value="13" @(Model != null && Model.estadoid == 13 ? "selected" : "")>HIDALGO</option>
+                                    <option value="14" @(Model != null && Model.estadoid == 14 ? "selected" : "")>JALISCO</option>
+                                    <option value="15" @(Model != null && Model.estadoid == 15 ? "selected" : "")>MEXICO</option>
+                                    <option value="16" @(Model != null && Model.estadoid == 16 ? "selected" : "")>MICHOACAN</option>
+                                    <option value="17" @(Model != null && Model.estadoid == 17 ? "selected" : "")>MORELOS</option>
+                                    <option value="18" @(Model != null && Model.estadoid == 18 ? "selected" : "")>NAYARIT</option>
+                                    <option value="19" @(Model != null && Model.estadoid == 19 ? "selected" : "")>NUEVO LEON</option>
+                                    <option value="20" @(Model != null && Model.estadoid == 20 ? "selected" : "")>OAXACA</option>
+                                    <option value="21" @(Model != null && Model.estadoid == 21 ? "selected" : "")>PUEBLA</option>
+                                    <option value="22" @(Model != null && Model.estadoid == 22 ? "selected" : "")>QUERETARO</option>
+                                    <option value="23" @(Model != null && Model.estadoid == 23 ? "selected" : "")>QUINTANA ROO</option>
+                                    <option value="24" @(Model != null && Model.estadoid == 24 ? "selected" : "")>SAN LUIS POTOSI</option>
+                                    <option value="25" @(Model != null && Model.estadoid == 25 ? "selected" : "")>SINALOA</option>
+                                    <option value="26" @(Model != null && Model.estadoid == 26 ? "selected" : "")>SONORA</option>
+                                    <option value="27" @(Model != null && Model.estadoid == 27 ? "selected" : "")>TABASCO</option>
+                                    <option value="28" @(Model != null && Model.estadoid == 28 ? "selected" : "")>TAMAULIPAS</option>
+                                    <option value="29" @(Model != null && Model.estadoid == 29 ? "selected" : "")>TLAXCALA</option>
+                                    <option value="30" @(Model != null && Model.estadoid == 30 ? "selected" : "")>VERACRUZ</option>
+                                    <option value="31" @(Model != null && Model.estadoid == 31 ? "selected" : "")>YUCATAN</option>
+                                    <option value="32" @(Model != null && Model.estadoid == 32 ? "selected" : "")>ZACATECAS</option>
+                                </select>
+
+                                <input type="submit" name="button" id="button" value="Ver Alianzas" class="alianzas_btn" style="cursor:pointer">
+                            </form>
+                        </div>
+                    </div>-->
+                </section>
+                <!--<form>
+
+                </form>-->
+            </section>
+
+        }
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+﻿@model MDA_Web.Models.TransferenciaModel
+@{
+    ViewBag.Title = "Transferencia_Saldo";
+    var siteKeyV2 = System.Configuration.ConfigurationManager.AppSettings["SiteKeyV2"];
+    var errorMessage = TempData["ErrorMessage"] as int?;
+
+}
+<!doctype html>
+<html lang="es-mx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="~/Scripts/formcheck.js"></script>
+    <script type="text/javascript" language="JavaScript">
+
+        function CheckRequiredFieldsLogin() {
+
+            var errormessage = new String();
+            // Put field checks below this point.
+
+            // Correcciones
+            if (document.frmmalogininterno.dia.value.length < 2) {
+                document.frmmalogininterno.dia.value = "0" + document.frmmalogininterno.dia.value;
+            }
+            if (document.frmmalogininterno.mes.value.length < 2) {
+                document.frmmalogininterno.mes.value = "0" + document.frmmalogininterno.mes.value;
+            }
+
+            // Validaciones
+            if (WithoutContent(document.frmmalogininterno.tarjeta.value)) {
+                errormessage += "\n- Ingresa tu numero de tarjeta!.";
+            } else {
+                if (document.frmmalogininterno.tarjeta.value.length < 13) {
+                    errormessage += "\n- Ingresa tu numero de tarjeta completo!.";
+                }
+            }
+
+            if (WithoutContent(document.frmmalogininterno.dia.value) || document.frmmalogininterno.dia.value == "dd") {
+                errormessage += "\n- Ingresa tu fecha de nacimiento!.";
+            } else {
+                if (WithoutContent(document.frmmalogininterno.mes.value) || document.frmmalogininterno.mes.value == "mm") {
+                    errormessage += "\n- Ingresa tu fecha de nacimiento!.";
+                } else {
+                    if (WithoutContent(document.frmmalogininterno.anio.value) || document.frmmalogininterno.anio.value == "aaaa") { errormessage += "\n- Ingresa tu fecha de nacimiento!."; }
+                }
+            }
+
+            if (document.frmmalogininterno.anio.value.length < 4) { errormessage += "\n- Ingresa tu fecha de nacimiento completa!."; }
+
+            var fechavalidar = '';
+            if (document.frmmalogininterno.dia.value != "dd" && document.frmmalogininterno.mes.value != "mm" && document.frmmalogininterno.anio.value != "aaaa") {
+                // Preparo fechas
+                fechavalidar = document.frmmalogininterno.mes.value + "/" + document.frmmalogininterno.dia.value + "/" + document.frmmalogininterno.anio.value;
+                // Fecha válida
+                if (!checkdatelogin(fechavalidar)) { errormessage += "\n- Ingresa una fecha de nacimiento valida!."; }
+
+            }
+
+            // Put field checks above this point.
+            if (errormessage.length > 2) {
+                alert('Para poder ingresar, por favor: ' + errormessage);
+                return false;
+            }
+
+            document.frmmalogininterno.submit();
+            return true;
+
+        } // end of function CheckRequiredFields()
+
+        function checkdatelogin(fecha) {
+            var validformat = /^\d{2}\/\d{2}\/\d{4}$/ //Basic check for format validity
+            var returnval = false
+            if (!validformat.test(fecha))
+                returnval = false
+            else { //Detailed check for valid date ranges
+                var monthfield = fecha.split("/")[0]
+                var dayfield = fecha.split("/")[1]
+                var yearfield = fecha.split("/")[2]
+                var dayobj = new Date(yearfield, monthfield - 1, dayfield)
+                if ((dayobj.getMonth() + 1 != monthfield) || (dayobj.getDate() != dayfield) || (dayobj.getFullYear() != yearfield))
+                    returnval = false
+                else
+                    returnval = true
+            }
+            return returnval
+        }
+    // Para solo recibir números
+        function numbersonlylogin(myfield, e, dec) {
+            var key;
+            var keychar;
+
+            if (window.event)
+                key = window.event.keyCode;
+            else if (e)
+                key = e.which;
+            else
+                return true;
+            keychar = String.fromCharCode(key);
+
+            // control keys
+            if ((key == null) || (key == 0) || (key == 8) ||
+                (key == 9) || (key == 13) || (key == 27))
+                return true;
+
+            // numbers
+            else if ((("0123456789").indexOf(keychar) > -1))
+                return true;
+
+            // decimal point jump
+            else if (dec && (keychar == ".")) {
+                myfield.form.elements[dec].focus();
+                return false;
+            }
+            else
+                return false;
+        }
+        function moveToNextField(origin, length, destination) {
+            var letters = origin.value.length + 1;
+            if (letters <= length) {
+                origin.focus();
+            } else {
+                document.getElementById(destination).focus();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="contenedor">
+        <section class="base_gris"></section>
+
+        <section class="base_contenido">
+
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">Transferencia de saldo</span><br><br>
+                <span class="texto_pagina">
+                    ¿Necesita realizar una transferencia de saldo?<br><br>
+                    Al momento de realizar una transferencia con tu monedero se trasladarán todos tus beneficios como saldo y piezas gratis acumuladas a un nuevo monedero. Puedes realizarlo tu mismo siguiendo estos pasos:<br>
+                    <br>
+                    1. Inicia sesión con los 13 dígitos de tu monedero del ahorro, así como tu fecha de nacimiento.<br><br>
+                    2. En el apartado de transferencia de saldo, ingresa tu monedero origen y destino.<br>
+                    <br>
+                    3. Da click en validar.<br><br>
+                    4. Revisa que tu datos se encuentren correctamente.<br><br>
+                    5. Y listo, se ha realizado tu transferencia.<br><br>
+
+                    O te podemos apoyar a través de las siguientes opciones:<br><br>
+                    •Llamando al <strong> 800 711 2222</strong> en donde nuestros operadores te estarán brindado el apoyo.<br>
+                    <br>
+                    •Mandando mensaje por nuestras redes sociales dando<a href="https://www.fahorro.com/" target="_blank"> click aquí</a>. <br>
+                    <br>
+                    •Escríbenos <a href="@Url.Action("Contacto", "Home")">aquí</a>.
+                </span>
+            </section>
+
+
+            @using (Html.BeginForm("SaveTransferenciaSaldo", "Home", FormMethod.Post, new { name = "frmmalogininterno" }))
+            {
+                @Html.AntiForgeryToken()
+        <section class="base_caja_sistem">
+            <div id="cuadro_titulo">Transferencia de saldo</div>
+            <div id="cuadro_text1">Número de monedero</div>
+            <div id="cuadro_campo1">
+                @Html.TextBoxFor(model => model.tarjeta, new { @class = "tarjeta4_campo", maxlength = 13, onkeypress = "return numbersonlylogin(this, event);", autocomplete = "off" })
+            </div>
+            <div id="cuadro_text2">Fecha de nacimiento</div>
+            <div id="cuadro_campo2">
+                <input id="dia" name="dia" type="text" class="fecha_campo" size="1" maxlength="2" value="dd" width="20" onfocus="if(this.value=='dd') this.value='';" onkeypress="return numbersonlylogin(event);" onkeyup="moveToNextField(this, 2, 'mes');" autocomplete="off" />&nbsp;
+                <input id="mes" name="mes" type="text" class="fecha_campo" size="1" maxlength="2" value="mm" width="20" onfocus="if(this.value=='mm') this.value='';" onkeypress="return numbersonlylogin(event);" onkeyup="moveToNextField(this, 2, 'anio');" autocomplete="off" />&nbsp;
+                <input id="anio" name="anio" type="text" class="fecha_campo" size="1" maxlength="4" value="aaaa" width="20" onfocus="if(this.value=='aaaa') this.value='';" onkeypress="return numbersonlylogin(event);" autocomplete="off" />
+                @if (errorMessage > 0 && errorMessage < 99)
+                {
+                    <span style="font-size:small; color:red;">
+                        &nbsp;
+                        * Tarjeta Bloqueada!
+                    </span>
+                }
+                </div>
+            @if (errorMessage == 1)
+            {
+                <div class="error-message">
+                    ** ¡Parámetros Incompletos!
+                </div>
+            }
+            else if (errorMessage == 3)
+            {
+                <div class="error-message">
+                    ** Tarjeta Inválida
+                </div>
+            }
+            <span class="headererror" id="error-message">
+                &nbsp;
+            </span>
+            <div class="g-recaptcha" data-sitekey="@ViewBag.sitekeyv2"></div>
+            <div id="cuadro_boton">
+                <input id="Ingresar" name="Ingresar" type="button" class="boton_cuadro_ingresar" title="Ingresar" value="Ingresar" style="cursor:pointer" onclick="javascript:CheckRequiredFieldsLogin();" />
+            </div>
+        </section>
+            }
+            <script>onload();</script>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            </section>
+    </div>
+</body>
+</html>

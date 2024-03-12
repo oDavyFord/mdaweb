@@ -1,0 +1,180 @@
+﻿@model MDA_Web.Models.ContactoModel
+@{
+    ViewBag.Title = "Contacto";
+    var Mensaje = TempData["Mensaje"] as int?;
+    var ActionErrorId = TempData["ErrorId"] as int?;
+    //Validar que la sesión este iniciada si es asi se toman los valores del nombre y de tarjeta 
+    var isSessionActive = Session["UserName"] != null;
+    var cardNumberValue = isSessionActive && Session["tarjeta"] != null ? Session["tarjeta"].ToString() : string.Empty;
+    var clientNameValue = isSessionActive && Session["UserName"] != null ? Session["UserName"].ToString() : string.Empty;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Monedero del Ahorro</title>
+    <link href="~/Content/general.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/menu.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/paginas.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="contenedor">
+        <section class="base_gris"></section>
+        <section class="base_contenido3">
+            <section class="base_texto_sistem">
+                <span class="titulo_pagina">Contacto</span><br /><br />
+                <span class="texto_pagina">
+                    En Farmacias del Ahorro te queremos escuchar. Por favor llena los campos del formulario y escribe tus comentarios para poder atender tu solicitud. <br /><br />
+
+                    Puede ser a través de alguna de las siguientes opciones:
+                    <br />
+                    <br />
+                    1. Enviar la solicitud vía correo electrónico.<br /><br />
+
+                    @if (Mensaje == 1)
+                    {
+                        <div class="top txt_gris_gde" align="center">
+                            ¡GRACIAS, SU MENSAJE SE HA ENVIADO CON ÉXITO ! <br />
+                            <br />
+                        </div>
+                    }
+
+                    @using (Html.BeginForm("SaveContacto", "Home", FormMethod.Post, new { onsubmit = "return CheckRequiredFieldsContacto();" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="contacto_base_col">
+                            <div class="contacto_col_1">Nombre:</div>
+                            <div class="contacto_col_4">
+                                @Html.TextBoxFor(model => model.name, new { id = "name", @class = "contacto_caja", onkeypress = "return alpha(event, letters);", autocomplete = "off", @Value = clientNameValue })
+                                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="contacto_col_1">No. de Tarjeta:</div>
+                            <div class="contacto_col_2">
+                                @Html.TextBoxFor(model => model.cardnumber, new { id = "cardNumber", @class = "contacto_caja", onkeypress = "return numbersonly(this, event);", autocomplete = "off", @Value = cardNumberValue })
+                            </div>
+                            <div class="contacto_col_1">Correo Electrónico:</div>
+                            <div class="contacto_col_4">
+                                @Html.TextBoxFor(model => model.email, new { id = "email", @class = "contacto_caja", autocomplete = "off" })
+                            </div>
+                            <div class="contacto_col_1">Teléfono:</div>
+                            <div class="contacto_col_2">
+                                @Html.TextBoxFor(model => model.phone, new { id = "phone", @class = "contacto_caja", onkeypress = "return numbersonly(this, event);", autocomplete = "off" })
+                            </div>
+                            <div class="contacto_col_3">Dudas o comentarios:</div>
+                            <div class="contacto_col_3">
+                                @Html.TextAreaFor(model => model.comments, new { id = "comments", cols = "60", rows = "5", autocomplete = "off", @class = "contacto_cajatxt" })
+                            </div>
+                            <div class="contacto_col_3">
+                                <input name="Enviar" type="submit" class="contacto_btn" title="Enviar" value="Enviar" style="cursor:pointer" />
+                            </div>
+                        </div>
+                    }
+                    <br />
+                    2. O llamarnos a través de la línea telefónica 800 711 22 22.
+                    <br /><br />
+                    Realiza tu transferencia de saldo en línea haciendo <a href="@Url.Action("transferencia_saldo_tarjeta", "Home")">click aquí</a>.<br />
+                    Revise nuestro aviso de privacidad haciendo <a href="https://www.fahorro.com/terminos-y-condiciones-mda" target="_blank">click aquí.</a>
+                </span>
+            </section>
+            <form>
+                <section class="base_caja_sistem3"><img src="~/Content/Images/img_tarjeta.jpg" alt="" width="480" height="680" /></section>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        function CheckRequiredFieldsContacto() {
+            var errormessage = "";
+
+            if (WithoutContent(document.getElementById("name").value)) {
+                errormessage += "\n- Ingresa tu nombre.";
+            }
+
+            if (WithoutContent(document.getElementById("cardNumber").value)) {
+                errormessage += "\n- Ingresa tu número de tarjeta.";
+            } else {
+                if (document.getElementById("cardNumber").value.length < 13) {
+                    errormessage += "\n- Ingresa tu número de tarjeta completo (13 dígitos).";
+                }
+            }
+
+            if (WithoutContent(document.getElementById("email").value)) {
+                errormessage += "\n- Ingresa tu correo electrónico.";
+            }
+
+            if (WithoutContent(document.getElementById("phone").value)) {
+                errormessage += "\n- Ingresa tu teléfono.";
+            } else {
+                if (document.getElementById("phone").value.length != 10) {
+                    errormessage += "\n- Ingresa los 10 dígitos de tu número de teléfono.";
+                }
+            }
+
+            if (WithoutContent(document.getElementById("comments").value)) {
+                errormessage += "\n- Ingresa tus comentarios.";
+            }
+
+            if (errormessage.length > 0) {
+                alert("Monedero.com dice:" + errormessage);
+                return false;
+            }
+
+            return true;
+        }
+
+        function WithoutContent(value) {
+            return value.trim().length === 0;
+        }
+
+        function numbersonly(myfield, e, dec) {
+            var key;
+            var keychar;
+
+            if (window.event)
+                key = window.event.keyCode;
+            else if (e)
+                key = e.which;
+            else
+                return true;
+            keychar = String.fromCharCode(key);
+
+            if ((key == null) || (key == 0) || (key == 8) ||
+                (key == 9) || (key == 13) || (key == 27))
+                return true;
+
+            else if (("0123456789").indexOf(keychar) > -1) {
+                var currentLength = myfield.value.length;
+                if (currentLength >= 13) {
+                    return false;
+                }
+                return true;
+            }
+
+            else if (dec && (keychar == ".")) {
+                myfield.form.elements[dec].focus();
+                return false;
+            }
+            else
+                return false;
+        }
+
+        var letters = "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZabcçdefghijklmnñopqrstuvwxyzàáÀÁéèÈÉíìÍÌïÏóòÓÒúùÚÙüÜ";
+        var numbers = "1234567890";
+        var signs = ",.:;@@-''";
+        var mathsigns = "+-=()*/";
+        var custom = "<>#$%&?¿";
+
+        function alpha(e, allow) {
+            var k;
+            k = document.all ? parseInt(e.keyCode) : parseInt(e.which);
+            return (allow.indexOf(String.fromCharCode(k)) != -1);
+        }
+    </script>
+</body>
+</html>
